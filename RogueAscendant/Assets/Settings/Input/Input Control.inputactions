@@ -1,0 +1,65 @@
+{
+    "name": "Input Control",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "7e0a7836-8b73-4d57-b998-6d323ea63698",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Button",
+                    "id": "171483a7-7e6e-4e25-b8b5-4932be5a265a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "c61b8e28-d051-4463-9e0f-a3dced49e5a4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "499da488-9e81-4ad0-8b2e-0237c28e7339",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e2050708-04ab-4d40-919f-23fbfd82c6d8",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8283dc56-aed2-4d70-88c3-bab25f0df606",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
