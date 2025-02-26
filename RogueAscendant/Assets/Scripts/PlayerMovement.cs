@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
+    [SerializeField] float jumpForce;
 
     Rigidbody rb;
 
@@ -26,6 +27,8 @@ public class PlayerMovement : MonoBehaviour
         if (ctx.phase == InputActionPhase.Performed)
         {
             Debug.Log("·ÉÆðÀ´£¡");
+            rb.velocity += Vector3.up * jumpForce;
+            rb.velocity += Vector3.right * jumpForce;
         }
     }
 }
