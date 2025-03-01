@@ -13,20 +13,39 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
-    InputControl control;
+    InputControl controls;
+    InputAction moveAction;
+    InputAction rotationAction;
 
-    float moveInput;
-    float rotationInput;
-
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        controls = new InputControl();
+
+        moveAction = controls.Player.Move;
+        rotationAction = controls.Player.Rotate;
     }
 
     private void Update()
     {
+        float moveInput = moveAction.ReadValue<float>();
+        float rotationInput = rotationAction.ReadValue<float>();
+
+        //轴输入 移动和转向
         transform.position += transform.forward * moveInput * moveSpeed * Time.deltaTime;
         transform.Rotate(0, rotationInput * rotationSpeed * Time.deltaTime, 0);
+    }
+
+    private void OnEnable()
+    {
+        moveAction.Enable();
+        rotationAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        moveAction.Disable();
+        rotationAction.Disable();
     }
 
     public void Jump(InputAction.CallbackContext ctx)
@@ -35,24 +54,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("飞起来！");
             rb.velocity += Vector3.up * jumpForce;
-        }
-    }
-
-    public void Move(InputAction.CallbackContext ctx)
-    {
-        if (ctx.phase == InputActionPhase.Performed || ctx.phase == InputActionPhase.Canceled)
-        {
-            Debug.Log("动起来！");
-            moveInput = ctx.ReadValue<float>();
-        }
-    }
-
-    public void Rotate(InputAction.CallbackContext ctx)
-    {
-        if (ctx.phase == InputActionPhase.Performed || ctx.phase == InputActionPhase.Canceled)
-        {
-            Debug.Log("转起来了");
-            rotationInput = ctx.ReadValue<float>();
         }
     }
 }
