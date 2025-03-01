@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext ctx)
     {
-        if (ctx.phase == InputActionPhase.Performed)
+        if (ctx.phase == InputActionPhase.Performed || ctx.phase == InputActionPhase.Canceled)
         {
             Debug.Log("动起来！");
             moveInput = ctx.ReadValue<float>();
@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Rotate(InputAction.CallbackContext ctx)
     {
-        if (ctx.phase == InputActionPhase.Performed)
+        if (ctx.phase == InputActionPhase.Performed || ctx.phase == InputActionPhase.Canceled)
         {
             Debug.Log("转起来了");
             rotationInput = ctx.ReadValue<float>();
