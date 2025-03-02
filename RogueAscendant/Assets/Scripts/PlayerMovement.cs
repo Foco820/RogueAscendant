@@ -13,67 +13,52 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpForce = 8f;
     [SerializeField] float springMultiplier = 1.5f;
 
-    //状态变量
     Rigidbody rb;
-    float currentMoveSpeed;
+    [SerializeField] InputHandler inputHandler;
 
-    InputControl controls;
-    InputAction moveAction;
-    InputAction rotationAction;
+    //状态参数
+    float currentMoveSpeed;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        controls = new InputControl();
-
-        moveAction = controls.Player.Move;
-        rotationAction = controls.Player.Rotate;
+        inputHandler = GetComponent<InputHandler>();
 
         currentMoveSpeed = moveSpeed;
     }
 
     private void Update()
     {
-        float moveInput = moveAction.ReadValue<float>();
-        float rotationInput = rotationAction.ReadValue<float>();
-
         //轴输入 移动和转向
-        transform.position += transform.forward * moveInput * currentMoveSpeed * Time.deltaTime;
-        transform.Rotate(0, rotationInput * rotationSpeed * Time.deltaTime, 0);
+        Move();
+        Rotate();
+        Jump();
+        Sprint();
     }
 
-    private void OnEnable()
+    private void Rotate()
     {
-        moveAction.Enable();
-        rotationAction.Enable();
+        transform.Rotate(0, inputHandler.rotationInput * rotationSpeed * Time.deltaTime, 0);
     }
 
-    private void OnDisable()
+    private void Move()
     {
-        moveAction.Disable();
-        rotationAction.Disable();
+        transform.position += transform.forward * inputHandler.moveInput * currentMoveSpeed * Time.deltaTime;
     }
 
-    public void Jump(InputAction.CallbackContext ctx)
+    private void Jump()
     {
-        if (ctx.phase == InputActionPhase.Performed)
+        if (inputHandler.isJumping)
         {
-            Debug.Log("飞起来！");
             rb.velocity += Vector3.up * jumpForce;
         }
     }
 
-    public void Sprint(InputAction.CallbackContext ctx)
+    private void Sprint()
     {
-        if (ctx.phase == InputActionPhase.Started)
+        if (inputHandler.isSprinting)
         {
-            Debug.Log("勇敢勇敢我的朋友");
             currentMoveSpeed = moveSpeed * springMultiplier;
-        }
-        else if (ctx.phase == InputActionPhase.Canceled)
-        {
-            Debug.Log("照在心里那片天空");
-            currentMoveSpeed = moveSpeed;
         }
     }
 }
