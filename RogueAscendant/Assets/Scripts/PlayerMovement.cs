@@ -32,8 +32,8 @@ public class PlayerMovement : MonoBehaviour
         //轴输入 移动和转向
         Move();
         Rotate();
-        Jump();
-        Sprint();
+        //Jump();
+        //Sprint();
     }
 
     private void Rotate()
@@ -46,19 +46,25 @@ public class PlayerMovement : MonoBehaviour
         transform.position += transform.forward * inputHandler.moveInput * currentMoveSpeed * Time.deltaTime;
     }
 
-    private void Jump()
+    public void Jump(InputAction.CallbackContext ctx)
     {
-        if (inputHandler.isJumping)
+        if (ctx.phase == InputActionPhase.Started)
         {
+            Debug.Log("飞起来！");
             rb.velocity += Vector3.up * jumpForce;
         }
     }
 
-    private void Sprint()
+    public void Sprint(InputAction.CallbackContext ctx)
     {
-        if (inputHandler.isSprinting)
+        if (ctx.phase == InputActionPhase.Started)
         {
+            Debug.Log("勇敢勇敢我的朋友");
             currentMoveSpeed = moveSpeed * springMultiplier;
+        }
+        else if (ctx.phase == InputActionPhase.Canceled)
+        {
+            currentMoveSpeed = moveSpeed;
         }
     }
 }

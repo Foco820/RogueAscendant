@@ -25,10 +25,10 @@ public class InputHandler : MonoBehaviour
         sprintAction = controls.Player.Sprint;
 
         //回调绑定
-        jumpAction.performed += OnJump;
-        jumpAction.canceled += OnJump;
-        sprintAction.performed += OnSprint;
-        sprintAction.canceled += OnSprint;
+        //jumpAction.performed += OnJump;
+        //jumpAction.canceled += OnJump;
+        //sprintAction.performed += OnSprint;
+        //sprintAction.canceled += OnSprint;
     }
 
     private void Update()
@@ -52,35 +52,35 @@ public class InputHandler : MonoBehaviour
         jumpAction.Disable();
         sprintAction.Disable();
 
-        jumpAction.performed -= OnJump;
-        jumpAction.canceled -= OnJump;
-        sprintAction.performed -= OnSprint;
-        sprintAction.canceled -= OnSprint;
+        //jumpAction.performed -= OnJump;
+        //jumpAction.canceled -= OnJump;
+        //sprintAction.performed -= OnSprint;
+        //sprintAction.canceled -= OnSprint;
     }
 
-    public void OnJump(InputAction.CallbackContext ctx)
-    {
-        if (ctx.phase == InputActionPhase.Started)
-        {
-            Debug.Log("飞起来！");
-            isJumping = true;
-        }
-        else if (ctx.phase == InputActionPhase.Canceled)
-        {
-            isJumping= false;
-        }
-    }
+    //    public void OnJump(InputAction.CallbackContext ctx)
+    //    {
+    //        if (ctx.phase == InputActionPhase.Started)
+    //        {
+    //            Debug.Log("飞起来！");
+    //            isJumping = true;
+    //        }
+    //        else if (ctx.phase == InputActionPhase.Canceled)
+    //        {
+    //            isJumping= false;
+    //        }
+    //    }
 
-    public void OnSprint(InputAction.CallbackContext ctx)
-    {
-        if (ctx.phase == InputActionPhase.Started)
-        {
-            Debug.Log("勇敢勇敢我的朋友");
-            isSprinting = true;
-        }
-        else if (ctx.phase == InputActionPhase.Canceled)
-        {
-            isSprinting = false;   
-        }
-    }
+    //    public void OnSprint(InputAction.CallbackContext ctx)
+    //    {
+    //        if (ctx.phase == InputActionPhase.Started)
+    //        {
+    //            Debug.Log("勇敢勇敢我的朋友");
+    //            isSprinting = true;
+    //        }
+    //        else if (ctx.phase == InputActionPhase.Canceled)
+    //        {
+    //            isSprinting = false;   
+    //        }
+    //    }
 }
