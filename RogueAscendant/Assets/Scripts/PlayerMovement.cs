@@ -7,11 +7,15 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    //基础参数
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float rotationSpeed = 120f;
-    [SerializeField] float jumpForce;
+    [SerializeField] float jumpForce = 8f;
+    [SerializeField] float springMultiplier = 1.5f;
 
+    //状态变量
     Rigidbody rb;
+    float currentMoveSpeed;
 
     InputControl controls;
     InputAction moveAction;
@@ -24,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
 
         moveAction = controls.Player.Move;
         rotationAction = controls.Player.Rotate;
+
+        currentMoveSpeed = moveSpeed;
     }
 
     private void Update()
@@ -32,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
         float rotationInput = rotationAction.ReadValue<float>();
 
         //轴输入 移动和转向
-        transform.position += transform.forward * moveInput * moveSpeed * Time.deltaTime;
+        transform.position += transform.forward * moveInput * currentMoveSpeed * Time.deltaTime;
         transform.Rotate(0, rotationInput * rotationSpeed * Time.deltaTime, 0);
     }
 
@@ -54,6 +60,20 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.Log("飞起来！");
             rb.velocity += Vector3.up * jumpForce;
+        }
+    }
+
+    public void Sprint(InputAction.CallbackContext ctx)
+    {
+        if (ctx.phase == InputActionPhase.Started)
+        {
+            Debug.Log("勇敢勇敢我的朋友");
+            currentMoveSpeed = moveSpeed * springMultiplier;
+        }
+        else if (ctx.phase == InputActionPhase.Canceled)
+        {
+            Debug.Log("照在心里那片天空");
+            currentMoveSpeed = moveSpeed;
         }
     }
 }
