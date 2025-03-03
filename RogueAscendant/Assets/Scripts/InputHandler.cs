@@ -23,12 +23,6 @@ public class InputHandler : MonoBehaviour
         rotationAction = controls.Player.Rotate;
         jumpAction = controls.Player.Jump;
         sprintAction = controls.Player.Sprint;
-
-        //回调绑定
-        //jumpAction.performed += OnJump;
-        //jumpAction.canceled += OnJump;
-        //sprintAction.performed += OnSprint;
-        //sprintAction.canceled += OnSprint;
     }
 
     private void Update()
@@ -51,36 +45,35 @@ public class InputHandler : MonoBehaviour
         rotationAction.Disable();
         jumpAction.Disable();
         sprintAction.Disable();
-
-        //jumpAction.performed -= OnJump;
-        //jumpAction.canceled -= OnJump;
-        //sprintAction.performed -= OnSprint;
-        //sprintAction.canceled -= OnSprint;
     }
 
-    //    public void OnJump(InputAction.CallbackContext ctx)
-    //    {
-    //        if (ctx.phase == InputActionPhase.Started)
-    //        {
-    //            Debug.Log("飞起来！");
-    //            isJumping = true;
-    //        }
-    //        else if (ctx.phase == InputActionPhase.Canceled)
-    //        {
-    //            isJumping= false;
-    //        }
-    //    }
+    private void LateUpdate()
+    {
+        isJumping = false; //重置跳跃
+    }
 
-    //    public void OnSprint(InputAction.CallbackContext ctx)
-    //    {
-    //        if (ctx.phase == InputActionPhase.Started)
-    //        {
-    //            Debug.Log("勇敢勇敢我的朋友");
-    //            isSprinting = true;
-    //        }
-    //        else if (ctx.phase == InputActionPhase.Canceled)
-    //        {
-    //            isSprinting = false;   
-    //        }
-    //    }
+    public void OnJump(InputAction.CallbackContext ctx)
+    {
+        //isJumping = ctx.phase == InputActionPhase.Started;
+
+        if (ctx.phase == InputActionPhase.Started)
+        {
+            isJumping = true;
+            Debug.Log("跳跃输入！");
+        }
+    }
+
+    public void OnSprint(InputAction.CallbackContext ctx)
+    {
+
+        if (ctx.phase == InputActionPhase.Started)
+        {
+            isSprinting = true;
+        }
+        else if (ctx.phase == InputActionPhase.Canceled)
+        {
+            isSprinting= false;
+        }
+        Debug.Log(isSprinting ? "疾跑输入.." : "正常输入");
+    }
 }
